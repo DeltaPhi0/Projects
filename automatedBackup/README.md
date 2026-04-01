@@ -39,7 +39,7 @@ mkdir -p "$DEST_LOCAL"
 
 tar -czf "$DEST_LOCAL/$FILENAME" \
   --warning=no-file-changed \
-  --exclude="" \ 
+  --exclude="" \
   -C "$PARENT_DIR" "$SOURCE_DIR"
 #input here whatever folders or files you do not want backed up, there can be multiple --exclude arguments
 
@@ -86,7 +86,7 @@ mkdir -p "$DEST_LOCAL"
 
 tar -czf "$DEST_LOCAL/$FILENAME" \
   --warning=no-file-changed \
-  --exclude="" \ 
+  --exclude="" \
   /home /usr /var /snap /opt /boot /etc
 #input here whatever folders or files you do not want backed up, there can be multiple --exclude arguments
 
