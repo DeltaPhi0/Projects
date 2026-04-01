@@ -1,4 +1,4 @@
-# Automated recovery & Cloud sync
+# Automated recovery & cloud sync
 
 ## Overview
 A homelab is only as secure as its disaster recovery plan (speaking from personal experience..). To ensure my infrastructure can survive a drive failure or data corruption, I made a backup system.
@@ -17,3 +17,97 @@ Instead of running one monolithic backup, I split the process into two distinct 
 * **Storage:** After a successful cloud upload, the local staging archives are automatically wiped to prevent the server's local disk from filling up.
 
   
+### 1. dockerBackup.sh
+
+```bash
+#!/bin/bash
+# dockerBackup.sh - Archives persistent Docker files and syncs offsite.
+
+# CONFIG
+SOURCE_DIR="docker"              
+PARENT_DIR="/home/user"         
+DEST_LOCAL="/home/user/backup/dockerBackup"
+FILENAME="dockerBackup_$(date +%Y-%m-%d).tar.gz"
+
+# Rclone Config
+REMOTE_NAME="gdrive"             
+REMOTE_DEST="$REMOTE_NAME:DockerBackups"
+
+mkdir -p "$DEST_LOCAL"
+
+# THE BACKUP
+
+tar -czf "$DEST_LOCAL/$FILENAME" \
+  --warning=no-file-changed \
+  --exclude="" \ 
+  -C "$PARENT_DIR" "$SOURCE_DIR"
+#input here whatever folders or files you do not want backed up, there can be multiple --exclude arguments
+
+# Capture the exit code
+EXIT_CODE=$?
+
+# Logic: 0 = Success, 1 = Warnings (like 'socket ignored' or 'file changed')
+if [ $EXIT_CODE -eq 0 ] || [ $EXIT_CODE -eq 1 ]; then
+    sudo -u user rclone move "$DEST_LOCAL/$FILENAME" "$REMOTE_DEST/" --progress
+
+    if [ $? -eq 0 ]; then
+        echo "Upload complete. Cleaning up"
+        sudo -u user rclone delete "$REMOTE_DEST/"
+        sudo rm "$DEST_LOCAL/dockerBackup_*"
+    else
+        echo "rclone upload failed"
+        exit 1
+    fi
+else
+    echo "Tar failed with exit code $EXIT_CODE."
+    exit 1
+fi
+```
+
+---
+
+### 2. systemServerBackup.sh
+
+```bash
+#!/bin/bash
+# systemServerBackup.sh - Archives OS config state and syncs offsite.
+
+# CONFIG
+DEST_LOCAL="/home/user/backup/fullSystemServer"
+FILENAME="fullServerBackup_$(date +%Y-%m-%d).tar.gz"
+
+# Rclone Config
+REMOTE_NAME="gdrive"             
+REMOTE_DEST="$REMOTE_NAME:serverBackups"
+
+mkdir -p "$DEST_LOCAL"
+
+# THE BACKUP
+
+tar -czf "$DEST_LOCAL/$FILENAME" \
+  --warning=no-file-changed \
+  --exclude="" \ 
+  /home /usr /var /snap /opt /boot /etc
+#input here whatever folders or files you do not want backed up, there can be multiple --exclude arguments
+
+# Capture the exit code
+EXIT_CODE=$?
+
+# Logic: 0 = Success, 1 = Warnings (like 'socket ignored' or 'file changed')
+if [ $EXIT_CODE -eq 0 ] || [ $EXIT_CODE -eq 1 ]; then
+    sudo -u user rclone move "$DEST_LOCAL/$FILENAME" "$REMOTE_DEST/" --progress
+
+    if [ $? -eq 0 ]; then
+        echo "Upload complete. Cleaning up"
+        sudo -u user rclone delete "$REMOTE_DEST/"
+        sudo rm "$DEST_LOCAL/fullServerBackup_*"
+    else
+        echo "rclone upload failed"
+        exit 1
+    fi
+else
+    echo "Tar failed with exit code $EXIT_CODE."
+    exit 1
+fi
+```
+
