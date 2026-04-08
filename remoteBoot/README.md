@@ -89,4 +89,4 @@ ssh -tt -i "$KEY_PATH" \
     root@$REMOTE_IP "cryptroot-unlock"
 ```
 
-P.S.: For anyone wondering why I divide every task into micro-tasks, it is because I was taught to divide my problems into lots of little ones. Also, on Bash, having multiple scripts that do different things is always nicer! Since I may have to use simpler tools sometime.
+P.S.: For anyone wondering why I divide every task into micro tasks, it is because I was taught to divide my problems into lots of little ones. Also, on Bash, having multiple scripts that do different things is always nicer! Since I may have to use simpler tools sometime.
