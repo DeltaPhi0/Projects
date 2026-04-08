@@ -63,7 +63,7 @@ The backend is built with memory safety and security as priorities:
 I modified my host's **UFW** to ensure:
 
 * **Internal routing only**: Nginx is restricted to internal Docker network traffic.
-* **No open ports**: Since I use a Cloudflare Tunnel, I have **0 open ports** on my router. This effectively "cloaks" my home IP from potential botnets and scanners.
+* **No open ports**: Since I use a Cloudflare Tunnel, I have **0 open ports** on my router. This effectively hides my home IP from potential botnets and scanners.
 
 ### 5. SSL and edge security
 * **Domain**: Secured a free community TLD via `eu.org`.
@@ -84,4 +84,4 @@ I modified my host's **UFW** to ensure:
 
 ---
 
-> **SOC Analyst Perspective**: This project demonstrates the practical application of **Attack Surface Reduction**. By treating a simple personal site with the same rigor as an enterprise application: using isolation, least privilege, and deterministic builds, I have created a resilient environment that is basically "cloaked".
+> **SOC Analyst Perspective**: This project demonstrates the practical application of **Attack Surface Reduction**. By treating a simple personal site with the same rigor as an enterprise application: using isolation, least privilege, and deterministic builds, I have created a resilient environment.
