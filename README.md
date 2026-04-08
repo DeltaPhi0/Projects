@@ -21,6 +21,9 @@ A custom Bash automation service that ensures my critical homelab data is never 
 ### 3. [Docker Infrastructure as Code](./docker)
 A sanitized look at my containerized homelab environment. This section breaks down how I use Docker Compose to manage a fleet of over 20 active containers, including secure routing via Nginx Proxy Manager, internal network isolation, and database management.
 
+### 4. [My personal zero cost Website](./website)
+After finding out about [eu.org](https://nic.eu.org/), I knew I had to build my own website. While my passion remains in automation and  uilding tools, this project was a great dive into full stack deployment and public facing security.
+
 ---
 
 ## My Methodology
