@@ -1,7 +1,7 @@
-# Hardened Self Hosted Web Infrastructure
+# Hardened self hosted website
 
 ## Overview
-This project is a study in **network isolation and defensive systems.** Instead of using traditional hosting, I host my personal website on my local hardware (**'Phi'**) using a multi layered Docker environment. 
+This project was a study in **network isolation and defensive systems.** Instead of using traditional hosting, I host my personal website on my local hardware (**'Phi'**) using a multi layered Docker environment. 
 
 The goal was to achieve a professional website for **€0**. By using Cloudflare Tunnels and strict Docker networking, I have exposed the site to the public internet without opening a single port on my home router!
 
