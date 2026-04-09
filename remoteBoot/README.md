@@ -1,13 +1,13 @@
 # Remote boot & remote LUKS unlocker
 
 ## Overview
-This project documents my custom workflow for remotely waking and decrypting my headless, full disk encrypted (LUKS) homelab server. 
+This project documents my custom script for remotely waking and decrypting my headless, full disk encrypted (LUKS) homelab server. 
 
-Instead of leaving a high powered exgaming PC running 24/7, this setup allows me to keep the server powered down and encrypted at rest. When compute power is needed, I trigger a multi-stage shell environment that wakes the server, waits for the pre-boot environment, and securely tunnels the decryption keys.
+Instead of leaving a high powered ex gaming PC running 24/7, this setup allows me to keep the server powered down and encrypted at rest. When compute power is needed, I trigger a shell environment that wakes the server, waits for the pre boot environment, and securely tunnels the decryption keys.
 
 This whole process can take as long as one minute before all the services in my server are ready.
 
-## Architecture & The Double-TTY Strike
+## Architecture and the Double TTY
 
 I broke the process down into modular Bash scripts hosted on a lightweight, always on VPN gateway (`VPNServ`).
 
@@ -38,7 +38,7 @@ This is the script you run from your personal laptop or phone to start the whole
 
 ssh -t user@VPNServ "/home/user/code/bin/totalControl.sh"
 ```
-### 2. `connectGateway.sh`
+### 2. `totalControl.sh`
 This sits on your VPN gateway. It is the orchestrator that fires the magic packet and waits for the server to wake up.
 
 ```bash
@@ -70,7 +70,7 @@ wakeonlan XX:XX:XX:XX:XX:XX
 ```
 
 ### 4. `unlockPhi.sh`
-This is the final script on your VPN gateway. It executes the Double-TTY strike to pass the decryption prompt back to you.
+This is the final script on my VPN gateway. It executes the Double TTY to pass the decryption prompt back to you.
 
 ```bash
 #!/bin/bash
