@@ -26,6 +26,17 @@ After finding out about [eu.org](https://nic.eu.org/), I knew I had to build my 
 
 ---
 
+## Live Dashboard and container monitoring preview
+
+![Homarr - Real time system metrics, heavily edited](./screenshots/homarr.png)
+
+*My Homarr dashboard showing hardware usage, active Docker containers, service URLs, and media library status + much more.*
+
+![Dozzle - Real time container logs and resource usage](./screenshots/dozzle.png)
+
+*Dozzle dashboard showing multiple active containers, CPU/RAM metrics, and log streams for services like Immich, Flaresolverr,  Homarr etc.*
+
+---
 ## My Methodology
 
 When building these projects, I try to adhere to the following principles:
